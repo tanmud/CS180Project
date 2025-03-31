@@ -1,4 +1,4 @@
-public interface Message {
+public interface MessageInterface {
     // User sender = this;
     // User receipient = user;
     // String content

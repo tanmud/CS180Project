@@ -1,4 +1,4 @@
-public interface Items {
+public interface ItemsInterface {
     // String name
     // String Description
     // int quantity

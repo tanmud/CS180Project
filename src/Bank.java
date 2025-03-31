@@ -1,4 +1,4 @@
-public interface Bank {
+public interface BankInteface {
     // User user
     // items<> selling
     // Items<> owned

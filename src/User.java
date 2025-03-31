@@ -1,4 +1,4 @@
-public interface User {
+public interface UserInterface {
     // Account Name
     // Account Username
     // Password
