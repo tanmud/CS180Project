@@ -4,6 +4,7 @@ public interface BankInteface {
     // Items<> owned
     // double balance
     // Constructor should initialize user, create empty list of items, balance
+    //          or have 2 constructors, with the default empty one being the zero argument one
 
     String buy(User seller, int quantity);
     //First checks  if item is in list
@@ -23,5 +24,7 @@ public interface BankInteface {
     String removeItemSale(Items item, int quantity);
     // first check if item exists in owned, if not print "not there"
     // if it's there copy item from owned to selling AND REM0VE DESCRIPTION
+
+    // add getters and setters!
 
 }
