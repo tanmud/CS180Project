@@ -1,8 +1,8 @@
 public interface BankInteface {
     // User user
-    // items<> selling
-    // Items<> owned
-    // double balance
+    // items<> selling SYNCHRONIZE EVERY CHANGE
+    // Items<> owned SYNCHRONIZE EVERY CHANGE
+    // double balance SYNCHRONIZE EVERY CHANGE
     // Constructor should initialize user, create empty list of items, balance
     //          or have 2 constructors, with the default empty one being the zero argument one
 
