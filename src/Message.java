@@ -3,60 +3,79 @@ import java.time.LocalTime;
 
 public class Message implements MessageInterface {
 
-    // ADD CONSTRUCTOR
+    private User sender;
+    private User recipient;
+    private String content;
+    private LocalDate date;
+    private LocalTime time;
+
+
+    public Message(User sender, User recipient, String content) {
+
+        this.sender = sender;
+        this.recipient = recipient;
+        this.content = content;
+        this.date = LocalDate.now(); // server time zone; but i think you can change time zones? more complex though
+        this.time = LocalTime.now(); // server time zone; but i think you can change time zones? more complex though
+    }
 
     @Override
     public User getSender() {
 
-        return null;
+        return this.sender;
     }
 
     @Override
     public void setSender(User sender) {
 
+        this.sender = sender;
     }
 
     @Override
     public User getRecipient() {
 
-        return null;
+        return this.recipient;
     }
 
     @Override
     public void setRecipient(User recipient) {
 
+        this.recipient = recipient;
     }
 
     @Override
     public String getContent() {
 
-        return "";
+        return this.content;
     }
 
     @Override
     public void setContent(String content) {
 
+        this.content = content;
     }
 
     @Override
-    public String getDate() {
+    public LocalDate getDate() {
 
-        return "";
+        return this.date;
     }
 
     @Override
     public void setDate(LocalDate date) {
 
+        this.date = date;
     }
 
     @Override
-    public String getTime() {
+    public LocalTime getTime() {
 
-        return "";
+        return this.time;
     }
 
     @Override
     public void setTime(LocalTime time) {
 
+        this.time = time;
     }
 }
