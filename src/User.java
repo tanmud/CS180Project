@@ -21,6 +21,7 @@ public class User extends Bank implements UserInterface {
         this.password = password;
     }
 
+    @Override
     public String sendMessage(Message message) {
 
         int i = 0;
@@ -35,19 +36,24 @@ public class User extends Bank implements UserInterface {
         return "Message sent successfully!";
     } // sends message and returns if it was successful or not; adds to chat arraylist
     //    boolean message(User.java user);
+
+    @Override
     public ArrayList<Message> getChats() {
 
         return this.chats;
     }
 
+    @Override
     public ArrayList<Message> getChat(User recipient) throws NoChatFoundException {
 
         ArrayList<Message> chat = this.chats;
         for (int j = 0; j < this.chats.size(); j++) {
 
-            if (this.chats.get(j).getRecipient().equals(recipient)) {
+            if (this.chats.get(j).getRecipient().equals(recipient) &&
+                    !this.chats.get(j + 1).getRecipient().equals(recipient)) {
 
                 chat.subList(j + 1, chat.size()).clear();
+                break;
             }
         }
         if (chat.equals(this.chats)) {
@@ -56,37 +62,49 @@ public class User extends Bank implements UserInterface {
         }
     } // get message history with specified person; check if it's a chat
     // have an exception with chat doesn't exist
+
+    @Override
     public void deleteAccount() {
 
-
+        this.name = null;
+        this.username = null;
+        this.password = null;
+        this.bank = null;
+        this.chats = null;
     } // set everything to default null values; delete message history, etc.
 
 
     // rest of the getter & setters
+    @Override
     public String getName() {
 
-
+        return this.name
     }
+    @Override
     public void setName(String name) {
 
-
+        this.name = name;
     }
 
+    @Override
     public String getUsername() {
 
-
+        return this.username;
     }
+    @Override
     public void setUsername(String username) {
 
-
+        this.username = username;
     }
 
+    @Override
     public String getPassword(){
 
-
+        return password;
     }
+    @Override
     public void setPassword(String password){
 
-
+        this.password = password;
     }
 }
