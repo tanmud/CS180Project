@@ -1,6 +1,9 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public interface MessageInterface {
-    // User sender = this;
-    // User receipient = user;
+    // User.java sender = this;
+    // User.java receipient = user;
     // String content
     // String Date            in format {Month,Day,Year}
     // String time            in format {hour:min} 24 hour clock
