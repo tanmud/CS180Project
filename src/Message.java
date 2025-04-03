@@ -56,6 +56,14 @@ public class Message implements MessageInterface {
     }
 
     @Override
+    public String dateToString() {
+
+        // example: JANUARY 31, 2025
+        String dateConvert = this.date.getMonth() + " " + this.date.getDayOfMonth() + ", " + this.date.getYear();
+        return dateConvert;
+    }
+
+    @Override
     public LocalDate getDate() {
 
         return this.date;
@@ -65,6 +73,13 @@ public class Message implements MessageInterface {
     public void setDate(LocalDate date) {
 
         this.date = date;
+    }
+
+    @Override
+    public String timeToString() {
+
+        String timeConvert = this.time.getHour() + ":" + this.time.getMinute();
+        return timeConvert;
     }
 
     @Override
@@ -78,4 +93,6 @@ public class Message implements MessageInterface {
 
         this.time = time;
     }
+
+
 }

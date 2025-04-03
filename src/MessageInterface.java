@@ -18,9 +18,11 @@ public interface MessageInterface {
     String getContent();
     void setContent(String content);
 
+    String dateToString();
     LocalDate getDate();
     void setDate(LocalDate date);
 
+    String timeToString();
     LocalTime getTime();
     void setTime(LocalTime time);
 }
