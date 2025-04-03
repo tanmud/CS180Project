@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class User extends Bank implements UserInterface {
+public class User implements UserInterface {
 
 
     private String name;
@@ -14,11 +14,11 @@ public class User extends Bank implements UserInterface {
     // ArrayList<Message> chats
 
     public User(String name, String username, String password, Bank bank) {
-
-        super();
         this.name = name;
         this.username = username;
         this.password = password;
+        this.bank = bank;
+        this.chats = new ArrayList<>();
     }
 
     @Override
@@ -39,7 +39,6 @@ public class User extends Bank implements UserInterface {
 
     @Override
     public ArrayList<Message> getChats() {
-
         return this.chats;
     }
 
@@ -65,7 +64,6 @@ public class User extends Bank implements UserInterface {
 
     @Override
     public void deleteAccount() {
-
         this.name = null;
         this.username = null;
         this.password = null;
@@ -77,34 +75,28 @@ public class User extends Bank implements UserInterface {
     // rest of the getter & setters
     @Override
     public String getName() {
-
         return this.name
     }
     @Override
     public void setName(String name) {
-
         this.name = name;
     }
 
     @Override
     public String getUsername() {
-
         return this.username;
     }
     @Override
     public void setUsername(String username) {
-
         this.username = username;
     }
 
     @Override
     public String getPassword(){
-
         return password;
     }
     @Override
     public void setPassword(String password){
-
         this.password = password;
     }
 }
