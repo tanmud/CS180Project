@@ -32,7 +32,7 @@ public class User implements UserInterface {
                 i = j;
             }
         }
-        this.chats.add(i, message);
+        this.chats.add(i + 1, message);
         return "Message sent successfully!";
     } // sends message and returns if it was successful or not; adds to chat arraylist
     //    boolean message(User.java user);
@@ -92,11 +92,11 @@ public class User implements UserInterface {
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
     @Override
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 }
