@@ -1,3 +1,10 @@
+/**
+ * This class contains the code for the items interface.
+ *
+ * @author christianbancroft
+ * @version March 31, 2025
+ */
+
 public interface ItemsInterface {
     // String name
     // String Description
@@ -18,4 +25,3 @@ public interface ItemsInterface {
     User getUser();
     void setUser(User user);
 }
-
