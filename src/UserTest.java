@@ -15,7 +15,7 @@ public class UserTest {
     private Message mFinal = new Message(u1, u2, "finalMSG");
     private Message m3 = new Message(u1, u3, "afterMSG");
     private Message newMessage = new Message (u1, u2, "new message");
-    private ArrayList<Message> chats = new ArrayList<>(Arrays.asList(m1, m1, m1, m1, m1, mFinal, m3, m3));;
+    private ArrayList<Message> chats = new ArrayList<>(Arrays.asList(m1, m1, m1, m1, m1, mFinal, m3, m3));
 
     // test the sendMessage method
     @Test
