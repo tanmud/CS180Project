@@ -43,6 +43,12 @@ public class User implements UserInterface {
     }
 
     @Override
+    public void setChats(ArrayList<Message> chats) {
+
+        this.chats = chats;
+    }
+
+    @Override
     public ArrayList<Message> getChat(User recipient) throws NoChatFoundException {
 
         ArrayList<Message> chat = this.chats;
@@ -59,6 +65,7 @@ public class User implements UserInterface {
 
             throw new NoChatFoundException("You have no chat with this user!");
         }
+        return chat;
     } // get message history with specified person; check if it's a chat
     // have an exception with chat doesn't exist
 
@@ -75,7 +82,7 @@ public class User implements UserInterface {
     // rest of the getter & setters
     @Override
     public String getName() {
-        return this.name
+        return this.name;
     }
     @Override
     public void setName(String name) {
@@ -98,5 +105,11 @@ public class User implements UserInterface {
     @Override
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Bank getBank() {
+
+        return this.bank;
     }
 }
