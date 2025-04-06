@@ -1,5 +1,11 @@
-public class Items implements ItemsInterface {
-    //fields
+/**
+ * This class contains the code for the items class.
+ *
+ * @author christianbancroft
+ * @version March 31, 2025
+ */
+
+public class Items implements ItemsInterface{
     private String name;
     private String description;
     private int quantity;
@@ -34,3 +40,4 @@ public class Items implements ItemsInterface {
         this.user = user;
     }
 }
+
