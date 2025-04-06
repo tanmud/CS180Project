@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface BankInterface {
     // User user
     // items<> selling SYNCHRONIZE EVERY CHANGE
@@ -29,4 +31,10 @@ public interface BankInterface {
 
     // add getters and setters!
 
+    User getUser();
+    void setUser(User user);
+    List<Items> getSelling();
+    List<Items> getOwned();
+    double getBalance();
+    void setBalance(double balance);
 }

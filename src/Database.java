@@ -4,26 +4,47 @@ import java.io.*;
 public class Database {
     // Writes users into the userlist.txt file
     private final String userFile = "userlist.txt";
-    private final String conversationFile = "conversations.txt";
-    private static ArrayList<User> userList;
-    private static ArrayList<Conversation> conversations;
+    private final String conversationsFile = "conversationslist.txt";
+    private static ArrayList<User> userList = new ArrayList<>();
+    private static ArrayList<Conversation> conversationsList = new ArrayList<>();
     private static Object userkeeper = new Object();
     private static Object convokeeper = new Object();
 
     public void startup() {
-        File file = new File(userFile);
-        if (file.createNewFile()) {
+        File user = new File(userFile);
+        File convo = new File(conversationsFile); // Create File objects for each file
+        loadUsers(user);
+        loadConversations(convo); //Run both classes to load information into their respective ArrayList
+    }
+
+    private void loadUsers(File file) {
+        if (file.length() == 0)
             return;
-        }
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(userFile))) {
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             synchronized (userkeeper) {
-                User line = (User) ois.readObject();
-                while (line != null) {
-                    userList.add(line);
-                    line = (User) ois.readObject();
+                while (true) {
+                    userList.add((User) ois.readObject());
                 }
             }
-        } catch (Exception e) {
+        } catch (EOFException e) { /* Normal termination */
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadConversations(File file) {
+        if (file.length() == 0)
+            return;
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            synchronized (convokeeper) {
+                while (true) {
+                    conversationsList.add((Conversation) ois.readObject());
+                }
+            }
+        } catch (EOFException e) { /* Normal termination */
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -34,29 +55,58 @@ public class Database {
      * @param password
      * @return "valid" if correct
      */
-    public String createUser(String name, String username, String password) {
+    public String createUser(String name, String username, String password) throws InvalidUserException {
         if (userExists(username)) {
-            return "user exists";
+            throw new InvalidUserException("User exists!");
         } else if (password.length() < 8) {
-            return "invalid password";
+            throw new InvalidUserException("Invalid password");
         }
-        User user = new User(name, username, password, new Bank(), new ArrayList<Message> inbox);
-        user.setBank(new Bank(user, new ArrayList<>, new ArrayList<>, 0));
+        User user = new User(name, username, password, new Bank());
+        user.setBank(new Bank(user));
         synchronized (userkeeper) {
-            userList.add(user));
+            userList.add(user);
         }
         return "valid";
     }
 
-    public boolean userExists(String username) {
-        for (User user : userList) {
-            synchronized (userkeeper) {
-                if (user.getUsername() == username) {
+    public boolean convoExists(User user1, User user2) {
+        synchronized (convokeeper) {
+            for (Conversation convo : conversationsList) {
+                if (convo.usersInConvo(user1, user2)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public boolean userExists(String username) {
+        for (User user : userList) {
+            synchronized (userkeeper) {
+                if (user.getName().equals(username)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void sendMessage(User sender, User receiver, String message) {
+        int convoIdx = 0;
+        if (!convoExists(sender, receiver)) {
+            synchronized (convokeeper) {
+                conversationsList.add(new Conversation(sender, receiver));
+                convoIdx = conversationsList.size() - 1;
+            }
+        }
+        synchronized (convokeeper) {
+            for (int i = 0; i < conversationsList.size(); i++) {
+                if (conversationsList.get(i).usersInConvo(sender, receiver)) {
+                    convoIdx = i;
+                }
+            }
+            conversationsList.get(convoIdx).sendMessage(sender, message);
+        }
     }
 
     /**
@@ -69,15 +119,15 @@ public class Database {
         ArrayList<Items> foundItems = new ArrayList<>();
         for (User user : userList) {
             for (int j = 0; j < user.getBank().getSelling().size(); j++) {
-                if (user.getBank().getSelling()[j].getName().contains(sequence))
-                    foundItems.add(user.getBank().getSelling()[j]);
+                if (user.getBank().getSelling().get(j).getName().contains(sequence))
+                    foundItems.add(user.getBank().getSelling().get(j));
             }
         }
         for (User user : userList) {
             for (int j = 0; j < user.getBank().getSelling().size(); j++) {
-                if (user.getBank().getSelling()[j].getDescription().contains(sequence) &&
-                        !foundItems.contains(user.getBank().getSelling()[j]))
-                    foundItems.add(user.getBank().getSelling()[j]);
+                if (user.getBank().getSelling().get(j).getDescription().contains(sequence) &&
+                        !foundItems.contains(user.getBank().getSelling().get(j)))
+                    foundItems.add(user.getBank().getSelling().get(j));
             }
         }
         return foundItems;
@@ -85,13 +135,26 @@ public class Database {
 
 
     public void end() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(userFile))) {
-            for (User user : userList) {
-                oos.writeObject(user);
+        try (ObjectOutputStream uoos = new ObjectOutputStream(new FileOutputStream(userFile));
+            ObjectOutputStream coos = new ObjectOutputStream(new FileOutputStream(conversationsFile))) {
+            synchronized (userkeeper) {
+                for (User user : userList) {
+                    uoos.writeObject(user);
+                }
+            }
+            synchronized (convokeeper) {
+                for (Conversation convo : conversationsList) {
+                    coos.writeObject(convo);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public static void main(String[] args) {
+        Database db = new Database();
+        db.startup();
+        db.end();
     }
 }

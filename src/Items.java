@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * This class contains the code for the items class.
  *
@@ -5,7 +7,7 @@
  * @version March 31, 2025
  */
 
-public class Items implements ItemsInterface{
+public class Items implements ItemsInterface, Serializable {
     private String name;
     private String description;
     private int quantity;

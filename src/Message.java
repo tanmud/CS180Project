@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Message implements MessageInterface {
+public class Message implements MessageInterface, Serializable {
 
     private User sender;
     private User recipient;
@@ -15,8 +16,8 @@ public class Message implements MessageInterface {
         this.sender = sender;
         this.recipient = recipient;
         this.content = content;
-        this.date = LocalDate.now(); // server time zone; but i think you can change time zones? more complex though
-        this.time = LocalTime.now(); // server time zone; but i think you can change time zones? more complex though
+        this.date = LocalDate.now(); // server time zone;
+        this.time = LocalTime.now(); // server time zone;
     }
 
     @Override

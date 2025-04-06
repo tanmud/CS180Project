@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,30 +9,35 @@ import java.util.List;
  * and manage inventory in a thread-safe environment.
  */
 
-public class Bank implements BankInterface {
+public class Bank implements BankInterface, Serializable {
     private User user;
-
-    private final List<Items> selling = Collections.synchronizedList(new ArrayList<>());
-
-    private final List<Items> owned = Collections.synchronizedList(new ArrayList<>());
-
+    private ArrayList<Items> selling;
+    private ArrayList<Items> owned;
     private double balance;
+    private static Object sellingkeeper = new Object();
+    private static Object ownedkeeper = new Object();
 
     public Bank() {
         this.user = null;
         this.balance = 0.0;
+        this.selling = new ArrayList<>();
+        this.owned = new ArrayList<>();
+
     }
 
     public Bank(User user) {
         this.user = user;
         this.balance = 0.0;
+        this.selling = new ArrayList<>();
+        owned = new ArrayList<>();
+
     }
 
     @Override
-    public synchronized String buy(User seller, int quantity) {
+    public String buy(User seller, int quantity) {
         Bank sellerBank = seller.getBank();
 
-        synchronized (sellerBank.selling) {
+        synchronized (sellingkeeper) {
             for (Items item : sellerBank.selling) {
                 if (item.getQuantity() >= quantity) {
                     // Reduce quantity from seller's item
@@ -45,7 +51,7 @@ public class Bank implements BankInterface {
                     purchased.setUser(this.user);
 
                     // buyer's owned list
-                    synchronized (owned) {
+                    synchronized (ownedkeeper) {
                         owned.add(purchased);
                     }
 
@@ -63,7 +69,7 @@ public class Bank implements BankInterface {
     }
 
     @Override
-    public synchronized String sell(User buyer, int quantity) {
+    public String sell(User buyer, int quantity) {
         // Delegate logic to buyer's buy() function
         String result = buyer.getBank().buy(this.user, quantity);
         return "Attempted to sell: " + result;
@@ -76,8 +82,8 @@ public class Bank implements BankInterface {
      * @return Message indicating success or failure.
      */
     @Override
-    public synchronized String putItemSale(Items item, int quantity) {
-        synchronized (owned) {
+    public String putItemSale(Items item, int quantity) {
+        synchronized (ownedkeeper) {
             for (Items ownedItem : owned) {
                 if (ownedItem.getName().equals(item.getName()) && ownedItem.getQuantity() >= quantity) {
                     // Create a copy of the item for the selling list
@@ -103,7 +109,7 @@ public class Bank implements BankInterface {
      */
     @Override
     public synchronized String removeItemSale(Items item, int quantity) {
-        synchronized (selling) {
+        synchronized (sellingkeeper) {
             for (Items sellingItem : selling) {
                 if (sellingItem.getName().equals(item.getName()) && sellingItem.getQuantity() >= quantity) {
                     sellingItem.setDescription(""); // Clear sale label
@@ -127,12 +133,12 @@ public class Bank implements BankInterface {
     }
 
     @Override
-    public List<Items> getSellingItems() {
+    public List<Items> getSelling() {
         return selling;
     }
 
     @Override
-    public List<Items> getOwnedItems() {
+    public List<Items> getOwned() {
         return owned;
     }
 
