@@ -5,6 +5,17 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * CS180 Group Project -- Marketplace MessageTest Class
+ * <p>
+ * A document with the JUnit tests for
+ * Message.java, testing the dateToString
+ * and timeToString methods.
+ *
+ * @author Natalie Lam, lab sec L09
+ * @version April 06, 2025
+ */
+
 public class MessageTest {
 
     private LocalDate date = LocalDate.of(2025, 04, 05);

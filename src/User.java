@@ -1,5 +1,19 @@
 import java.util.ArrayList;
 
+/**
+ * CS180 Group Project -- Marketplace User Class
+ * <p>
+ * Allows you to create a User object, which contains information
+ * their name, username, password, bank, and chat history. It is
+ * also possible to send messages (objects of the Message class)
+ * to a specified recipient as well as pull up chat history with
+ * that person. Relevant accessor and mutator methods for each
+ * attribute are available.
+ *
+ * @author Natalie Lam, lab sec L09
+ * @version April 06, 2025
+ */
+
 public class User implements UserInterface {
 
 

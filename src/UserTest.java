@@ -4,6 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * CS180 Group Project -- Marketplace UserTest Class
+ * <p>
+ * A document with the JUnit tests for
+ * User.java, testing the sendMessage
+ * and getChats methods.
+ *
+ * @author Natalie Lam, lab sec L09
+ * @version April 06, 2025
+ */
+
+
 public class UserTest {
 
     Bank bank1 = null;
