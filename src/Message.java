@@ -2,6 +2,19 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * CS180 Group Project -- Marketplace Message Class
+ * <p>
+ * Allows you to create a Message object,
+ * which contains information like the message’s
+ * sender, recipient, content, date, and time
+ * the message is sent. Relevant accessor and
+ * mutator methods for each attribute are available.
+ *
+ * @author Natalie Lam, lab sec L09
+ * @version April 06, 2025
+ */
+
 public class Message implements MessageInterface, Serializable {
 
     private User sender;
