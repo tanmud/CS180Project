@@ -1,3 +1,10 @@
+/**
+ * This class contains items class test.
+ * 
+ * @author christianbancroft
+ * @version April 5, 2025
+ */
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,3 +36,4 @@ public class ItemsTest {
         assertEquals("securepass", item.getUser().getPassword());
     }
 }
+
