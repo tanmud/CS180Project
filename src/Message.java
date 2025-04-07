@@ -12,7 +12,7 @@ import java.time.LocalTime;
  * mutator methods for each attribute are available.
  *
  * @author Natalie Lam, lab sec L09
- * @version April 06, 2025
+ * @version Apr 06, 2025
  */
 
 public class Message implements MessageInterface, Serializable {
@@ -71,7 +71,6 @@ public class Message implements MessageInterface, Serializable {
 
     @Override
     public String dateToString() {
-
         // example: JANUARY 31, 2025
         String dateConvert = this.date.getMonth() + " " + this.date.getDayOfMonth() + ", " + this.date.getYear();
         return dateConvert;
@@ -104,7 +103,6 @@ public class Message implements MessageInterface, Serializable {
 
     @Override
     public void setTime(LocalTime time) {
-
         this.time = time;
     }
 

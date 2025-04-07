@@ -1,12 +1,26 @@
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-import java.io.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * DatabaseTest Class
+ * Checks the methods in the Database class
+ *
+ * @author Tanish Mudaliar, L09
+ * @version Apr 1, 2025
+ */
+
 public class DatabaseTest {
-    private Database db;
     private final String testUserFile = "userlist.txt";
     private final String testConvoFile = "conversationslist.txt";
+    private Database db;
 
     @BeforeEach
     void setUp() throws IOException {

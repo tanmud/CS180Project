@@ -1,11 +1,11 @@
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
- * This class contains the code for the items class.
+ * This class contains the code for the items class including
+ * getters and setters and a equals method.
  *
  * @author christianbancroft
- * @version March 31, 2025
+ * @version Mar 31, 2025
  */
 
 public class Items implements ItemsInterface, Serializable {
@@ -21,10 +21,12 @@ public class Items implements ItemsInterface, Serializable {
         this.quantity = quantity;
         this.user = user;
     }
+
     // getters and setters
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -32,6 +34,7 @@ public class Items implements ItemsInterface, Serializable {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -39,6 +42,7 @@ public class Items implements ItemsInterface, Serializable {
     public int getQuantity() {
         return quantity;
     }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
@@ -54,8 +58,8 @@ public class Items implements ItemsInterface, Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Items)) return false;
-        Items items = (Items) o;
+        // Check if object is an item
+        if (!(o instanceof Items items)) return false;
         return name.equals(items.name) && description.equals(items.description);
     }
 

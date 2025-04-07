@@ -1,35 +1,66 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * This class contains items class test.
- *
- * @author christianbancroft
- * @version April 5, 2025
- */
+class ItemsTest {
+    private User user1;
+    private User user2;
+    private Items baseItem;
 
-public class ItemsTest {
+    @BeforeEach
+    void setUp() {
+        user1 = new User("User1", "user1", "password123", new Bank());
+        user2 = new User("User2", "user2", "password456", new Bank());
+        user1.setBank(new Bank(user1));
+        user2.setBank(new Bank(user2));
+        baseItem = new Items("Laptop", "Gaming laptop", 5, user1);
+    }
 
     @Test
-    public void testItemFieldsAndGettersSetters() {
-        Bank dummyBank = null;
+    @DisplayName("Constructor and getters work correctly")
+    void constructorAndGetters() {
+        assertEquals("Laptop", baseItem.getName());
+        assertEquals("Gaming laptop", baseItem.getDescription());
+        assertEquals(5, baseItem.getQuantity());
+        assertEquals(user1, baseItem.getUser());
+    }
 
-        // Create a valid User
-        User user = new User("Alice", "alice123", "securepass", dummyBank);
+    @Test
+    @DisplayName("Setters update fields properly")
+    void settersUpdateFields() {
+        baseItem.setName("Tablet");
+        baseItem.setDescription("Portable device");
+        baseItem.setQuantity(10);
+        baseItem.setUser(user2);
 
-        // Create an Items object and set values
-        Items item = new Items("Water Bottle", "A 1-liter reusable water bottle.", 2, user);
+        assertAll("Updated fields",
+                () -> assertEquals("Tablet", baseItem.getName()),
+                () -> assertEquals("Portable device", baseItem.getDescription()),
+                () -> assertEquals(10, baseItem.getQuantity()),
+                () -> assertEquals(user2, baseItem.getUser())
+        );
+    }
 
-        // Assertions
-        assertEquals("Water Bottle", item.getName());
-        assertEquals("A 1-liter reusable water bottle.", item.getDescription());
-        assertEquals(2, item.getQuantity());
-        assertEquals(user, item.getUser());
+    @Test
+    @DisplayName("Equality check ignores quantity and user")
+    void equalityIgnoresQuantityAndUser() {
+        Items sameAttributes = new Items("Laptop", "Gaming laptop", 3, user2);
+        Items differentName = new Items("Phone", "Gaming laptop", 5, user1);
+        Items differentDesc = new Items("Laptop", "Business laptop", 5, user1);
 
-        // Check user fields
-        assertEquals("Alice", item.getUser().getName());
-        assertEquals("alice123", item.getUser().getUsername());
-        assertEquals("securepass", item.getUser().getPassword());
+        assertAll("Equality checks",
+                () -> assertTrue(baseItem.equals(sameAttributes)),
+                () -> assertFalse(baseItem.equals(differentName)),
+                () -> assertFalse(baseItem.equals(differentDesc))
+        );
+    }
+
+    @Test
+    @DisplayName("Equals handles null and different types")
+    void equalsEdgeCases() {
+        String notAnItem = "Laptop";
+        assertAll("Edge cases",
+                () -> assertFalse(baseItem.equals(null)),
+                () -> assertFalse(baseItem.equals(notAnItem)) // Invalid type asessment
+        );
     }
 }
-

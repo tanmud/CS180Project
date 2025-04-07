@@ -1,16 +1,19 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 
-
+/**
+ * User class
+ * Structures the fields and methods of a user that can be used for the other classes
+ * to keep track of different accounts.
+ *
+ * @author Natalie Lam, L09
+ * @version Mar 28, 2025
+ */
 
 public class User implements UserInterface, Serializable {
     private String name;
     private String username;
     private String password;
     private Bank bank;
-    // Constructor should create name, username, password, set bank with everything 0/null
-    //       User.java user = this; in each class
-    // ArrayList<Message> chats
 
     public User(String name, String username, String password, Bank bank) {
         this.name = name;
@@ -36,6 +39,7 @@ public class User implements UserInterface, Serializable {
     public String getName() {
         return this.name;
     }
+
     @Override
     public void setName(String name) {
         this.name = name;
@@ -45,6 +49,7 @@ public class User implements UserInterface, Serializable {
     public String getUsername() {
         return this.username;
     }
+
     @Override
     public void setUsername(String username) {
         this.username = username;
@@ -54,6 +59,7 @@ public class User implements UserInterface, Serializable {
     public String getPassword() {
         return password;
     }
+
     @Override
     public void setPassword(String password) {
         this.password = password;

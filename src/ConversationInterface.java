@@ -1,11 +1,29 @@
+import java.util.ArrayList;
+
+/**
+ * ConversationInterface Interface
+ * Outlines the conversations class.
+ *
+ * @author Tanish Mudaliar, L09
+ * @version Apr 3, 2025
+ */
+
 public interface ConversationInterface {
-        // User user1
-        // User user2
-        // ArrayList<Message> messages;
+    String sendMessage(User sender, String message) throws InvalidUserException;
 
-        void addMessage(User sender, User receiver, String message);
-        // check if sender and receiver are user1 and user2
-        // check if object exists
-        // adds a new message object to the messages arraylist
+    boolean usersInConvo(User user);
 
+    boolean usersInConvo(User u1, User u2);
+
+    ArrayList<Message> getChats();
+
+    void setChats(ArrayList<Message> chats);
+
+    User getUser1();
+
+    void setUser1(User user1);
+
+    User getUser2();
+
+    void setUser2(User user2);
 }

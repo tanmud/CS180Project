@@ -3,6 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * UserTest Class
+ * Tests the methods in the User class
+ *
+ * @author Christian Bancroft, L09
+ * @version Apr 3, 2025
+ */
+
 class UserTest {
 
     private User user;

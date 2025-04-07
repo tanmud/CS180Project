@@ -1,8 +1,14 @@
 import org.junit.jupiter.api.*;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * ConversationsTest Class
+ * Checks the methods in the Conversations class
+ *
+ * @author Tanish Mudaliar, L09
+ * @version Apr 1, 2025
+ */
 
 public class ConversationsTest {
     private User user1;
@@ -35,11 +41,13 @@ public class ConversationsTest {
         String result = conversation.sendMessage(user1, "Hello Bob!");
         assertEquals("Message sent successfully!", result);
         assertEquals(1, conversation.getChats().size());
+        // Checks if the message is sent and added to list
 
         Message msg = conversation.getChats().get(0);
         assertSame(user1, msg.getSender());
         assertSame(user2, msg.getRecipient());
         assertEquals("Hello Bob!", msg.getContent());
+        // Checks if message content is the same
     }
 
     @Test
@@ -48,6 +56,7 @@ public class ConversationsTest {
         String result = conversation.sendMessage(user2, "Hi Alice!");
         assertEquals("Message sent successfully!", result);
         assertEquals(1, conversation.getChats().size());
+        // Checks if message has been added
 
         Message msg = conversation.getChats().get(0);
         assertSame(user2, msg.getSender());
@@ -60,6 +69,7 @@ public class ConversationsTest {
         assertThrows(InvalidUserException.class, () -> {
             conversation.sendMessage(user3, "I shouldn't be here!");
         });
+        // Lambda function checks if another user is wrongly there
     }
 
     @Test

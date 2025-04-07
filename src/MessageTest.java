@@ -1,12 +1,19 @@
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+/**
+ * MessageTest class
+ * Tests the methods of the message class
+ *
+ * @author Tanish Mudaliar, L09
+ * @version Mar 30, 2024
+ */
 
 class MessageTest {
 

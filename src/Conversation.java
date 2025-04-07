@@ -1,9 +1,17 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Conversation class
+ * Embeds the message class to create a coherent structure for one-
+ * to-on conversations. Each conversation is serialized into a file
+ * in DataBase.java
+ *
+ * @author Tanish Mudaliar, L09
+ * @version Apr 3, 2025
+ */
 
-
-public class Conversation implements Serializable {
+public class Conversation implements ConversationInterface, Serializable {
     private User user1;
     private User user2;
     private ArrayList<Message> chats;
@@ -18,7 +26,7 @@ public class Conversation implements Serializable {
         User receiver;
         if (sender.equals(user1)) {
             receiver = user2;
-        } else if (sender.equals(user2)){
+        } else if (sender.equals(user2)) {
             receiver = user1;
         } else {
             throw new InvalidUserException("User is not in the chat!");

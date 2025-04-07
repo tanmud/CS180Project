@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,12 +12,12 @@ import java.util.List;
  */
 
 public class Bank implements BankInterface, Serializable {
+    private static Object sellingkeeper = new Object();
+    private static Object ownedkeeper = new Object();
     private User user;
     private ArrayList<Items> selling;
     private ArrayList<Items> owned;
     private double balance;
-    private Object sellingkeeper = new Object();
-    private Object ownedkeeper = new Object();
 
     public Bank() {
         this.user = null;
@@ -38,7 +37,7 @@ public class Bank implements BankInterface, Serializable {
     @Override
     public String buy(Items itemToBuy, User seller, int quantity) {
         Bank sellerBank = seller.getBank();
-        synchronized (sellerBank.sellingkeeper) {
+        synchronized (sellingkeeper) {
             for (int i = 0; i < sellerBank.selling.size(); i++) {
                 if (sellerBank.selling.get(i).equals(itemToBuy) && sellerBank.selling.get(i).getQuantity() >= quantity) {
                     // Reduce quantity from seller's item
@@ -58,7 +57,7 @@ public class Bank implements BankInterface, Serializable {
                             this.user.getName(), quantity,
                             itemToBuy.getName(), seller.getName());
                 } else {
-                        return "Transaction failed: insufficient quantity.";
+                    return "Transaction failed: insufficient quantity.";
                 }
             }
         }
@@ -79,19 +78,14 @@ public class Bank implements BankInterface, Serializable {
         }
     }
 
-    /**
-     * Puts an owned item up for sale by copying it into the selling list.
-     * @param item The item to list for sale.
-     * @param quantity The quantity to list.
-     * @return Message indicating success or failure.
-     */
+    // Puts an owned item up for sale by copying it into the selling list.
     @Override
     public String putItemSale(Items item, int quantity) {
         synchronized (ownedkeeper) {
             for (int i = 0; i < owned.size(); i++) {
                 if (owned.get(i).equals(item) && (owned.get(i).getQuantity() >= quantity)) {
                     // Create a copy of the item for the selling list
-                    Items itemForSale = new Items(item.getName(),item.getDescription(), quantity, this.user);
+                    Items itemForSale = new Items(item.getName(), item.getDescription(), quantity, this.user);
                     owned.get(i).setQuantity(owned.get(i).getQuantity() - quantity);
                     synchronized (sellingkeeper) {
                         selling.add(itemForSale);
@@ -108,18 +102,13 @@ public class Bank implements BankInterface, Serializable {
         return "Item not found";
     }
 
-    /**
-     * Removes a listed item from the selling list by clearing its description.
-     * @param item The item to remove from sale.
-     * @param quantity The quantity to remove.
-     * @return Message indicating success or failure.
-     */
+    // Removes a listed item from the selling list by clearing its description.
     @Override
     public String removeItemSale(Items item, int quantity) {
         synchronized (sellingkeeper) {
             for (int i = 0; i < selling.size(); i++) {
                 if (selling.get(i).equals(item) && (selling.get(i).getQuantity() >= quantity)) {
-                    Items itemForSale = new Items(item.getName(),item.getDescription(), quantity, this.user);
+                    Items itemForSale = new Items(item.getName(), item.getDescription(), quantity, this.user);
                     selling.get(i).setQuantity(selling.get(i).getQuantity() - quantity);
                     synchronized (ownedkeeper) {
                         owned.add(itemForSale);
@@ -136,6 +125,7 @@ public class Bank implements BankInterface, Serializable {
         return "Item not found";
     }
 
+    //Adds Item to the owned list
     public void addItemToOwned(String name, String description, int quantity) {
         synchronized (ownedkeeper) {
             owned.add(new Items(name, description, quantity, user));
