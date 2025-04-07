@@ -26,10 +26,7 @@ public class User implements UserInterface, Serializable {
 
     // Returns true if the username of the two users are the same
     public boolean equals(User user) {
-        if ((user.name).equals(this.name)) {
-            return true;
-        }
-        return false;
+        return (user.name).equals(this.name);
     }
 
     // rest of the getter & setters

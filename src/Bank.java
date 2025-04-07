@@ -7,6 +7,9 @@ import java.util.List;
  * This class represents a Bank system for a specific User,
  * allowing them to buy/sell items, list items for sale,
  * and manage inventory in a thread-safe environment.
+ *
+ * @author Alina Liu, L09
+ * @version Apr 2, 2025
  */
 
 public class Bank implements BankInterface, Serializable {
@@ -14,16 +17,15 @@ public class Bank implements BankInterface, Serializable {
     private ArrayList<Items> selling;
     private ArrayList<Items> owned;
     private double balance;
-    private static Object sellingkeeper = new Object();
-    private static Object ownedkeeper = new Object();
+    private Object sellingkeeper = new Object();
+    private Object ownedkeeper = new Object();
 
     public Bank() {
         this.user = null;
         this.balance = 0.0;
         this.selling = new ArrayList<>();
         this.owned = new ArrayList<>();
-
-    }
+    } // This constructor is only supposed to be used when initializing a User object
 
     public Bank(User user) {
         this.user = user;
@@ -34,45 +36,47 @@ public class Bank implements BankInterface, Serializable {
     }
 
     @Override
-    public String buy(User seller, int quantity) {
+    public String buy(Items itemToBuy, User seller, int quantity) {
         Bank sellerBank = seller.getBank();
-
-        synchronized (sellingkeeper) {
-            for (Items item : sellerBank.selling) {
-                if (item.getQuantity() >= quantity) {
+        synchronized (sellerBank.sellingkeeper) {
+            for (int i = 0; i < sellerBank.selling.size(); i++) {
+                if (sellerBank.selling.get(i).equals(itemToBuy) && sellerBank.selling.get(i).getQuantity() >= quantity) {
                     // Reduce quantity from seller's item
-                    item.setQuantity(item.getQuantity() - quantity);
-
+                    sellerBank.selling.get(i).setQuantity(sellerBank.selling.get(i).getQuantity() - quantity);
                     // copies item
-                    Items purchased = new Items();
-                    purchased.setName(item.getName());
-                    purchased.setDescription(item.getDescription());
-                    purchased.setQuantity(quantity);
-                    purchased.setUser(this.user);
-
+                    Items purchased = new Items(sellerBank.selling.get(i).getName(),
+                            sellerBank.selling.get(i).getDescription(), quantity, this.user);
                     // buyer's owned list
                     synchronized (ownedkeeper) {
                         owned.add(purchased);
                     }
-
                     // removes after quantity reaches zero
-                    if (item.getQuantity() == 0) {
-                        sellerBank.selling.remove(item);
+                    if (sellerBank.selling.get(i).getQuantity() == 0) {
+                        sellerBank.selling.remove(i);
                     }
-
-                    return "Item bought successfully.";
+                    return String.format("%s bought %d of %s from %s",
+                            this.user.getName(), quantity,
+                            itemToBuy.getName(), seller.getName());
+                } else {
+                        return "Transaction failed: insufficient quantity.";
                 }
             }
         }
 
-        return "Purchase failed: item not found or insufficient quantity.";
+        return "Transaction failed: item not found";
     }
 
     @Override
-    public String sell(User buyer, int quantity) {
+    public String sell(Items itemToSell, User buyer, int quantity) {
         // Delegate logic to buyer's buy() function
-        String result = buyer.getBank().buy(this.user, quantity);
-        return "Attempted to sell: " + result;
+        String result = buyer.getBank().buy(itemToSell, this.user, quantity);
+        if (result.contains("Transaction")) {
+            return result;
+        } else {
+            return String.format("%s sold %d of %s to %s",
+                    this.user.getName(), quantity,
+                    itemToSell.getName(), buyer.getName());
+        }
     }
 
     /**
@@ -84,21 +88,24 @@ public class Bank implements BankInterface, Serializable {
     @Override
     public String putItemSale(Items item, int quantity) {
         synchronized (ownedkeeper) {
-            for (Items ownedItem : owned) {
-                if (ownedItem.getName().equals(item.getName()) && ownedItem.getQuantity() >= quantity) {
+            for (int i = 0; i < owned.size(); i++) {
+                if (owned.get(i).equals(item) && (owned.get(i).getQuantity() >= quantity)) {
                     // Create a copy of the item for the selling list
-                    Items itemForSale = new Items();
-                    itemForSale.setName(item.getName());
-                    itemForSale.setQuantity(quantity);
-                    itemForSale.setDescription("For Sale");
-                    itemForSale.setUser(this.user);
-
-                    selling.add(itemForSale);
-                    return "Item listed for sale.";
+                    Items itemForSale = new Items(item.getName(),item.getDescription(), quantity, this.user);
+                    owned.get(i).setQuantity(owned.get(i).getQuantity() - quantity);
+                    synchronized (sellingkeeper) {
+                        selling.add(itemForSale);
+                    }
+                    if (owned.get(i).getQuantity() == 0) {
+                        owned.remove(i);
+                    }
+                    return "Item moved!";
+                } else if (owned.get(i).getQuantity() < quantity) {
+                    return "Insufficient quantity";
                 }
             }
         }
-        return "Item not available in owned items.";
+        return "Item not found";
     }
 
     /**
@@ -108,16 +115,31 @@ public class Bank implements BankInterface, Serializable {
      * @return Message indicating success or failure.
      */
     @Override
-    public synchronized String removeItemSale(Items item, int quantity) {
+    public String removeItemSale(Items item, int quantity) {
         synchronized (sellingkeeper) {
-            for (Items sellingItem : selling) {
-                if (sellingItem.getName().equals(item.getName()) && sellingItem.getQuantity() >= quantity) {
-                    sellingItem.setDescription(""); // Clear sale label
-                    return "Item removed from sale.";
+            for (int i = 0; i < selling.size(); i++) {
+                if (selling.get(i).equals(item) && (selling.get(i).getQuantity() >= quantity)) {
+                    Items itemForSale = new Items(item.getName(),item.getDescription(), quantity, this.user);
+                    selling.get(i).setQuantity(selling.get(i).getQuantity() - quantity);
+                    synchronized (ownedkeeper) {
+                        owned.add(itemForSale);
+                    }
+                    if (selling.get(i).getQuantity() == 0) {
+                        selling.remove(i);
+                    }
+                    return "Item moved!";
+                } else if (selling.get(i).getQuantity() < quantity) {
+                    return "Insufficient quantity";
                 }
             }
         }
-        return "Item not found in selling list.";
+        return "Item not found";
+    }
+
+    public void addItemToOwned(String name, String description, int quantity) {
+        synchronized (ownedkeeper) {
+            owned.add(new Items(name, description, quantity, user));
+        }
     }
 
     // getters and setters

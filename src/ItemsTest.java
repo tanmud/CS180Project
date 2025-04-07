@@ -1,12 +1,12 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * This class contains items class test.
- * 
+ *
  * @author christianbancroft
  * @version April 5, 2025
  */
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemsTest {
 
@@ -18,11 +18,7 @@ public class ItemsTest {
         User user = new User("Alice", "alice123", "securepass", dummyBank);
 
         // Create an Items object and set values
-        Items item = new Items();
-        item.setName("Water Bottle");
-        item.setDescription("A 1-liter reusable water bottle.");
-        item.setQuantity(2);
-        item.setUser(user);
+        Items item = new Items("Water Bottle", "A 1-liter reusable water bottle.", 2, user);
 
         // Assertions
         assertEquals("Water Bottle", item.getName());

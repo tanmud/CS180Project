@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * This class contains the code for the items class.
@@ -13,6 +14,13 @@ public class Items implements ItemsInterface, Serializable {
     private int quantity;
     private User user;
 
+
+    public Items(String name, String description, int quantity, User user) {
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.user = user;
+    }
     // getters and setters
     public String getName() {
         return name;
@@ -38,8 +46,18 @@ public class Items implements ItemsInterface, Serializable {
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Items)) return false;
+        Items items = (Items) o;
+        return name.equals(items.name) && description.equals(items.description);
+    }
+
 }
 

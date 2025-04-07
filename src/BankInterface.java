@@ -8,7 +8,7 @@ public interface BankInterface {
     // Constructor should initialize user, create empty list of items, balance
     //          or have 2 constructors, with the default empty one being the zero argument one
 
-    String buy(User seller, int quantity);
+    String buy(Items itemToBuy, User seller, int quantity);
     //First checks  if item is in list
     // Check if it can buy
     // returns what happened
@@ -16,7 +16,7 @@ public interface BankInterface {
     // if quantity of the selling item is 0, remove item from seller
     // Tanish bought 1 item from Christian
 
-    String sell(User buyer, int quantity);
+    String sell(Items itemToSell, User buyer, int quantity);
     // String result = buyer.buy(this, quantity);
     // based on result create an output
 

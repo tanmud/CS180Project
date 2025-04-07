@@ -1,14 +1,19 @@
 import java.util.*;
 import java.io.*;
 
+/**
+ * Database class
+ * Reads and writes into the two main files that preserves user, message, and sales data.
+ */
+
 public class Database {
     // Writes users into the userlist.txt file
     private final String userFile = "userlist.txt";
     private final String conversationsFile = "conversationslist.txt";
-    private static ArrayList<User> userList = new ArrayList<>();
-    private static ArrayList<Conversation> conversationsList = new ArrayList<>();
-    private static Object userkeeper = new Object();
-    private static Object convokeeper = new Object();
+    static ArrayList<User> userList = new ArrayList<>();
+    static ArrayList<Conversation> conversationsList = new ArrayList<>();
+    private static final Object userkeeper = new Object();
+    private static final Object convokeeper = new Object();
 
     public void startup() {
         File user = new File(userFile);
@@ -27,7 +32,7 @@ public class Database {
                     userList.add((User) ois.readObject());
                 }
             }
-        } catch (EOFException e) { /* Normal termination */
+        } catch (EOFException e) { // Normal termination
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -43,7 +48,7 @@ public class Database {
                     conversationsList.add((Conversation) ois.readObject());
                 }
             }
-        } catch (EOFException e) { /* Normal termination */
+        } catch (EOFException e) { // Normal termination
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,7 +88,7 @@ public class Database {
     public boolean userExists(String username) {
         for (User user : userList) {
             synchronized (userkeeper) {
-                if (user.getName().equals(username)) {
+                if (user.getUsername().equals(username)) {
                     return true;
                 }
             }
@@ -133,7 +138,6 @@ public class Database {
         return foundItems;
     }
 
-
     public void end() {
         try (ObjectOutputStream uoos = new ObjectOutputStream(new FileOutputStream(userFile));
             ObjectOutputStream coos = new ObjectOutputStream(new FileOutputStream(conversationsFile))) {
@@ -150,11 +154,5 @@ public class Database {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Database db = new Database();
-        db.startup();
-        db.end();
     }
 }
