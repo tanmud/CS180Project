@@ -54,6 +54,9 @@ connects closely with the Items, User, and Bank classes,
 supporting the creation, function, and storage of our store 
 items, and the function of our program.
 
+<h3>Conversation Class</h3>
+This class represents a conversation between two users in our ecommerce platoform. It implements the Serializable and ConversationInterface interfaces, overriding relevant methods, and allows you to create user objects, and store the messages between them. 
+
 <h3>User Class</h3>
 
 This class represents the people (buyers or sellers) in the 
