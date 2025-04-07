@@ -90,3 +90,8 @@ methods for the date and time. These tests ensure relevant
 information is not modified correctly, or shown in a 
 non-human-readable format. The Message class is essential because
 it facilitates communication between buyers and sellers.
+
+<h3>Bank Class</h3>
+
+This class represents the bank system that is in our ecommerce platform. It implements BankInterface. Bank contains four main fields: user, selling, owned, and balance. The user field represents the owner of the bank account. The selling list holds the items that a user currently has listed. The owned list contains the items that a user currently possesses, and the balance field tracks a user’s available funds. The Bank class allows for item transactions to be made between users through the buy() and sell() methods. Users can list owned items for sale using putItemSale() and remove those items with removeItemSale(). We tested this class by simulating transactions, and the bank class is important because it links to the User class and acts as the core buying and selling function for the eccommerce platform.
+
