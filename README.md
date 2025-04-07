@@ -67,9 +67,12 @@ user to communicate for selling or buying items. It implements
 MessageInterface and allows you to create a Message 
 object, which contains information like the message’s sender,
 recipient, content, date, and time the message is sent. Relevant
-accessor and mutator methods for each attribute are available.
+accessor and mutator methods for each field are available.
 
-<h4>MessageTest</h4>
-
-A document with the JUnit tests for Message.java, testing the 
-dateToString and timeToString methods.
+We tested Message using the MessageTest class, which had preset
+User and Message objects to test the functionality of the
+constructor, accessor methods, mutator methods, and toString 
+methods for the date and time. These tests ensure relevant
+information is not modified correctly, or shown in a 
+non-human-readable format. The Message class is essential because
+it facilitates communication between buyers and sellers.
