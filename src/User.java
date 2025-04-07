@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
 public class User implements UserInterface, Serializable {
     private String name;
     private String username;

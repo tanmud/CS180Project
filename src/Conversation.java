@@ -1,6 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
 public class Conversation implements Serializable {
     private User user1;
     private User user2;
