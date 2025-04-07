@@ -1,5 +1,18 @@
 # CS180Project
-<u><h3>Item Class</u></h3>
+
+<u><h2>Compiling and Running</u></h2>
+This repository should be able to be used in any compiler or
+IDE. Each class' test cases in the form ClassNameTest.java
+should be run to ensure functionality. If a main method is
+desired, potential users should create a Datebase object
+to start and end the system.
+
+<u><h2>Submission</u></h2>
+Tanish Mudaliar will submit the cloned repository and documents
+on Brightspace/Vocareum.
+
+<u><h2>Classes</u></h2>
+<h3>Item Class</h3>
 	This class represents an item in our ecommerce store. It 
 implements ItemsInterface and overrides its methods. Items 
 contains 4 main fields: name, description, quantity, 
@@ -21,7 +34,7 @@ sellers interact on our ecommerce store over the
 items they are buying / selling, and connects to the 
 bank class, which holds the functions to buy / sell items. 
 
-<u><h3>Database Class</u></h3>
+<h3>Database Class</h3>
 This class represents the store system in our ecommerce 
 platform. It implements DatabaseInterace and overrides 
 its methods. Databae contains 4 main fields: userFile, 
@@ -41,7 +54,7 @@ connects closely with the Items, User, and Bank classes,
 supporting the creation, function, and storage of our store 
 items, and the function of our program.
 
-<u><h3>User Class</h3></u>
+<h3>User Class</h3>
 
 This class represents the people (buyers or sellers) in the 
 ecommerce platform. It implements UserInterface, overriding
@@ -60,7 +73,7 @@ and sellers are part of the premise of the platform, which,
 in basic terms, is a place were people (users) can buy or sell
 items.
 
-<u><h3>Message Class</u></h3>
+<h3>Message Class</h3>
 
 This class represents messages, which can be sent from user to 
 user to communicate for selling or buying items. It implements 
