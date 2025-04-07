@@ -13,7 +13,7 @@ on Brightspace/Vocareum.
 
 <u><h2>Classes</u></h2>
 <h3>Item Class</h3>
-	This class represents an item in our ecommerce store. It 
+	This class represents an item (for sale or for purchase) in our ecommerce store. It 
 implements ItemsInterface and overrides its methods. Items 
 contains 4 main fields: name, description, quantity, 
 and user, storing respectively an item’s name, description, 
@@ -43,9 +43,7 @@ the fileNames for saved data and the lists of site users
 and conversations, respectively. Database also includes 
 the nessesary methods to start up and shut down the system, 
 create users, check if a user exists, and perform item 
-searches based off an item name. 
-
-We tested Database using 
+searches based off an item name. We tested Database using 
 the DatabaseTest class, which created temporary users, 
 storing and retrieving their data, and performed search 
 operations to verify the Database operated correctly. The 
@@ -55,7 +53,7 @@ supporting the creation, function, and storage of our store
 items, and the function of our program.
 
 <h3>Conversation Class</h3>
-This class represents a conversation between two users in our ecommerce platoform. It implements the Serializable and ConversationInterface interfaces, overriding relevant methods, and allows you to create user objects, and store the messages between them. 
+This class represents a conversation between two users (buyers or sellers) in our ecommerce platoform. It implements the Serializable and ConversationInterface interfaces, overriding relevant methods, and allows you to create user objects, and store the messages between them. It also contains the standard getters and setters for each of the initiated methods. We tested Conversation using a corresponding test class that verifies correct output for sending messages, retreiving the chat log, and confirming actual user participation in a conversation. Two valid user objects are created and linked through a Conversation instance to ensure that the message and user relationship are correctly handled. This class plays a key role in our project, directly connecting with the User class, and utilizes the Messenge class to store individual messages, creating a dynamic and reliable messaging system between users on our platform. 
 
 <h3>User Class</h3>
 
