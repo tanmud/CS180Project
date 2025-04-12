@@ -95,3 +95,6 @@ it facilitates communication between buyers and sellers.
 
 This class represents the bank system that is in our ecommerce platform. It implements BankInterface. Bank contains four main fields: user, selling, owned, and balance. The user field represents the owner of the bank account. The selling list holds the items that a user currently has listed. The owned list contains the items that a user currently possesses, and the balance field tracks a user’s available funds. The Bank class allows for item transactions to be made between users through the buy() and sell() methods. Users can list owned items for sale using putItemSale() and remove those items with removeItemSale(). We tested this class by simulating transactions, and the bank class is important because it links to the User class and acts as the core buying and selling function for the eccommerce platform.
 
+<h3>NOTE on Testing for All</h3>
+For most of the testcases, we used lambda functions ontop of regular assertions to determine the accuracy of our code. These functions made it simpler to create different threads and check synchronization. It also helped checked multiple aspects of a methods function with one assertion to be more cohesive.
+
