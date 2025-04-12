@@ -57,10 +57,13 @@ public class Items implements ItemsInterface, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o)
+            return true;
         // Check if object is an item
-        if (!(o instanceof Items items)) return false;
-        return name.equals(items.name) && description.equals(items.description);
+        if (!(o instanceof Items))
+            return false;
+        Items item = (Items) o;
+        return name.equals(item.name) && description.equals(item.description);
     }
 
 }

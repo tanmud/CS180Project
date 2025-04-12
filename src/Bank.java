@@ -56,7 +56,7 @@ public class Bank implements BankInterface, Serializable {
                     return String.format("%s bought %d of %s from %s",
                             this.user.getName(), quantity,
                             itemToBuy.getName(), seller.getName());
-                } else {
+                } else if (sellerBank.selling.get(i).equals(itemToBuy) && sellerBank.selling.get(i).getQuantity() < quantity) {
                     return "Transaction failed: insufficient quantity.";
                 }
             }

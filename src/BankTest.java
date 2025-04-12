@@ -60,10 +60,10 @@ public class BankTest {
     @Test
     @DisplayName("Successful item sale")
     void successfulSell() {
-        Bank bank = new Bank(otherUser);
-        otherUser.setBank(bank);
-        bank.getSelling().add(testItem);
-        String result = bank.sell(testItem, otherUser, 2);
+        Bank bank1 = new Bank(otherUser);
+        otherUser.setBank(bank1);
+        bank1.getSelling().add(testItem);
+        String result = bank1.sell(testItem, otherUser, 2);
         assertTrue(result.contains("sold"));
     }
 
