@@ -2,7 +2,7 @@
  * UserInterface class
  * Outlines the User class
  *
- * @author Natilie Lam, L09
+ * @author Natalie Lam, L09
  * @version Mar 30, 2025
  */
 
