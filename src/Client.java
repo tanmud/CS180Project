@@ -8,24 +8,31 @@
 
 public class Client implements ClientInterface {
 
+    private int portNumber;
+    private String hostName;
+
     @Override
     public int getPortNumber() {
-        return 0;
+
+        return this.portNumber;
     }
 
     @Override
     public String getHostName() {
-        return "";
+
+        return this.hostName;
     }
 
     @Override
     public void setPortNumber(int portNumber) {
 
+        this.portNumber = portNumber;
     }
 
     @Override
     public void setHostName(String hostName) {
 
+        this.hostName = hostName;
     }
 
     public static void main(String[] args) {
